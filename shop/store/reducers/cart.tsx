@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-    console.log(action.type)
+  console.log(action.product)
   switch (action.type) {
     case ADD_TO_CART:
       const addedProduct = action.product;
