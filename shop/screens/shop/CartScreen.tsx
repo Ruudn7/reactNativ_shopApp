@@ -2,18 +2,46 @@ import React from 'react';
 import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import Colors from '../../constans/Colors';
+import product from '../../store/reducers/product';
+import CartItem from '../../components/shop/CartItem';
+
 
 const CartScreen = props => {
     const cartTotalAmount = useSelector(state => state.cart.totalAmount)
+    const cartItems = useSelector(state => {
+        const transformedCartItems: any[] = [];
+        for (const key in state.cart.items) {
+            transformedCartItems.push({
+                productId: key,
+                productTitle: state.cart.items[key].productTitle,
+                productPrice: state.cart.items[key].productPrice,
+                quantity: state.cart.items[key].quantity,
+                sum: state.cart.items[key].sum,
+            })
+        }
+        return transformedCartItems;
+    });
+
     return (
         <View style={styles.screen}>
             <View style={styles.summary}>
                 <Text style={styles.summaryText}>
-                    Total: <Text style={styles.amount}>${cartTotalAmount}</Text>
+                    Total: <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
                 </Text>
-                <Button title='Oreder Now' onPress={() => {}} />
+                <Button color={Colors.accent} title='Oreder Now' disabled={cartItems.length === 0} onPress={() => {}} />
             </View>
-            <Text>CART ITEMS</Text>
+            <FlatList
+                data={cartItems}
+                keyExtractor={item => item.productId}
+                renderItem={itemData => { 
+                    return <CartItem
+                        quantity={itemData.item.quantity}
+                        title={itemData.item.productTitle}
+                        amount={itemData.item.sum}
+                        onRemove={() => {}}
+                    />
+                }}
+            />
         </View>
     )
 };
