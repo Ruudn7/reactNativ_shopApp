@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 class Oreder {
     constructor(
         id,
@@ -9,6 +11,10 @@ class Oreder {
         this.items = items;
         this.totalAmount = totalAmount;
         this.date = date;
+    }
+
+    get readableDate() {
+        return moment(this.date).format('MMMM Do YYYY, hh:mm')
     }
 }
 
