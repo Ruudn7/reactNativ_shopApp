@@ -1,18 +1,19 @@
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
 import ShopNavigator from './navigation/ShopNavigator';
-import productReducer from './store/reducers/product';
+import cartReducer from './store/reducers/cart';
+import productsReducer from './store/reducers/product';
 
-const rootReducer  = combineReducers({
-  products: productReducer
-})
+const rootReducer = combineReducers({
+  cart: cartReducer,
+  products: productsReducer
+});
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -22,14 +23,17 @@ const fetchFonts = () => {
 };
 
 export default function App() {
-
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  if(!fontLoaded) {
-    return <AppLoading
-      startAsync={fetchFonts} 
-      onFinish={() => setFontLoaded(true)}
-    />
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => {
+          setFontLoaded(true);
+        }}
+      />
+    );
   }
   return (
     <Provider store={store}>
@@ -37,12 +41,3 @@ export default function App() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

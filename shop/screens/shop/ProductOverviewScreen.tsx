@@ -34,17 +34,21 @@ const ProductOverviewScreen = props => {
     );
 };
 
-ProductOverviewScreen.navigationOptions = {
-    headerTitle: 'All products',
-    headerRight: (
-        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-            <Item
-                title='Cart'
-                iconName={ Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-                onPress={()=>{}}
-            />
-        </HeaderButtons>
-    )
+ProductOverviewScreen.navigationOptions = navData => {
+    return {
+        headerTitle: 'All products',
+        headerRight: (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title='Cart'
+                    iconName={ Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+                    onPress={()=>{
+                        navData.navigation.navigate('Cart')
+                    }}
+                />
+            </HeaderButtons>
+        )
+    }
 }
 
 const styles = StyleSheet.create({

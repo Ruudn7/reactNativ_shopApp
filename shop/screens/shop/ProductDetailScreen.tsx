@@ -38,7 +38,6 @@ const ProductDetailScreen = props => {
 };
 
 ProductDetailScreen.navigationOptions = navData => {
-    console.log(navData.navigation.getParam('productTitle'))
     return {
         headerTitle: navData.navigation.getParam('productTitle')
     };
