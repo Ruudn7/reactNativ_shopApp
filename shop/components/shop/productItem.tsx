@@ -55,25 +55,27 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '100%',
-        height: '60%',
+        height: '55%',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         overflow: 'hidden'
     },
     image: {
         width: '100%',
-        height: '60%'
+        height: '100%'
     },
     details: {
         alignItems: 'center',
-        height: '15%',
+        height: '20%',
         padding: 10
     },
     title: {
+        fontFamily: 'open-sans-bold',
         fontSize: 18,
         marginVertical: 4
     },
     price: {
+        fontFamily: 'open-sans',
         fontSize: 14,
         color: '#888'
     },
