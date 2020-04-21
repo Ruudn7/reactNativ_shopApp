@@ -8,7 +8,6 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case ADD_ORDER:
-            console.log(state)
             const newOrder = new Order(
                 new Date().toString(),
                 action.orderData.items,

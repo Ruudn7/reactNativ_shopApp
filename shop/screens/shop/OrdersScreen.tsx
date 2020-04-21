@@ -7,7 +7,6 @@ import CustomHeaderButton from '../../components/UI/HeaderButton';
 
 const OrderScreen = props => {
     const orders = useSelector(state => {
-        console.log(state.orders.totalAmount)
         return state.orders.orders
     })
 
