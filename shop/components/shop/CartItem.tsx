@@ -11,13 +11,13 @@ const CartItem = props => {
             </View>
             <View style={styles.itemData}>
                 <Text style={styles.mainText}>${props.amount}</Text>
-                <TouchableOpacity onPress={props.onRemove}>
+                {props.deletable && <TouchableOpacity onPress={props.onRemove}>
                     <Ionicons 
                         name={ Platform.OS === 'android' ? 'md-trash' : 'ios-trash' }
                         size={23}
                         color='red'
                     />
-                </TouchableOpacity>
+                </TouchableOpacity>}
             </View>
         </View>
     )
@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     },
     itemData: {
         flexDirection: 'row',
-        alignSelf: 'center'
+        alignSelf: 'center',
+ 
     },
     quantity: {
         fontFamily: 'open-sans',
