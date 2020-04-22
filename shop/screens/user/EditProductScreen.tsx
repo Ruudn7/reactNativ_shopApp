@@ -1,13 +1,13 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CustomHeaderButton from '../../components/UI/HeaderButton';
-import { useSelector } from 'react-redux';
+import * as productActions from '../../store/actions/product';
 
 
 const EditProductScreen = props => {
-
     const prodId = props.navigation.getParam('productId');
     const editedProduct = useSelector(state =>
         state.products.userProducts.find(prod => prod.id === prodId)
@@ -18,10 +18,28 @@ const EditProductScreen = props => {
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState(editedProduct ? editedProduct.description : '');
 
-    const submitHandler = useCallback(() => {
-        console.log('Submitting');
-    }, []);
+    const dispatch = useDispatch();
 
+    const submitHandler = useCallback(() => {
+        if (editedProduct) {
+            console.log(editedProduct)
+            dispatch(productActions.updateProduct(
+                prodId,
+                title,
+                description,
+                imageUrl
+            )) 
+        } else {
+            dispatch(productActions.createProduct(
+                title,
+                description,
+                imageUrl,
+                +price
+            )) 
+        }
+        props.navigation.goBack();
+    }, [dispatch, prodId, title, description, imageUrl, price]);
+        
     useEffect(() => {
         props.navigation.setParams({submit: submitHandler})
     }, [submitHandler])
@@ -68,10 +86,10 @@ const EditProductScreen = props => {
 };
 
 EditProductScreen.navigationOptions = navData => {
-    const submitFn= navData.navigation.getParam('submit');
+    const submitFn = navData.navigation.getParam('submit');
     return {
         headerTitle: navData.navigation.getParam('productId')
-            ? 'EditProduct'
+            ? 'Edit Product'
             : 'Add product',
         headerRight: (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
