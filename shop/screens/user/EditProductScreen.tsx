@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import CustomHeaderButton from '../../components/UI/HeaderButton';
 import * as productActions from '../../store/actions/product';
+import CustomInput from '../../components/UI/Input';
+
 
 const FORM_INPUT_UPDATE = 'UPDATE';
 
@@ -92,61 +94,70 @@ const EditProductScreen = props => {
         props.navigation.setParams({submit: submitHandler})
     }, [submitHandler])
 
-    const textChangeHandler = (inputIdentifier, text) => {
+    const inputChangeHandler =  useCallback((inputIdentifier, inputValue, inputValidity) => {
         let isValid = false;
-        if (text.trim().length > 0 ) {
-            isValid = true;
-        }
         dispatchFormState({
             type: FORM_INPUT_UPDATE,
-            value: text,
-            isValid: isValid,
+            value: inputValue,
+            isValid: inputValidity,
             input: inputIdentifier
         })
-    } 
+    }, [dispatchFormState])
 
     return (
         <ScrollView>
             <View style={styles.form}>
-                <View style={styles.formControl}>
-                    <Text style={styles.label}>Title</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={formState.inputValues.title}
-                        onChangeText={text => textChangeHandler('title', text)}
-                        keyboardType='default'
-                        autoCapitalize='sentences'
-                        returnKeyType='next'
-                    />
-                </View>
-                {!formState.inputValidities.title && <Text>Please type valid title</Text>}
-                <View style={styles.formControl}>
-                    <Text style={styles.label}>Image URL</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={formState.inputValues.imageUrl}
-                        onChangeText={text => textChangeHandler('imageUrl', text)}
-                    />
-                </View>
+                <CustomInput
+                    id='title'
+                    label='Title'
+                    errorText='Please enter a valid title'
+                    keyboardType='default'
+                    autoCaptitalize='sentences'
+                    autoCorrect
+                    returnKeyType='next'
+                    onInputChange={inputChangeHandler}
+                    initialValue={editedProduct ? editedProduct.title : ''}
+                    initialValid={!!editedProduct}
+                    required
+                />
+                <CustomInput
+                    id='imageUrl'
+                    label='Image url'
+                    errorText='Please enter a valid Image url'
+                    keyboardType='default'
+                    returnKeyType='next'
+                    onInputChange={inputChangeHandler}
+                    initialValue={editedProduct ? editedProduct.imageUrl : ''}
+                    initialValid={!!editedProduct}
+                    required
+                />
                 {editedProduct ? null : (
-                    <View style={styles.formControl}>
-                        <Text style={styles.label}>Price</Text>
-                        <TextInput
-                            style={styles.input}
-                            value={formState.inputValues.price}
-                            onChangeText={text => textChangeHandler('price', text)}
-                            keyboardType='decimal-pad'
-                        />
-                    </View>)
-                }
-                <View style={styles.formControl}>
-                    <Text style={styles.label}>Description</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={formState.inputValues.description}
-                        onChangeText={text => textChangeHandler('description', text)}
+                    <CustomInput
+                        id='price'
+                        label='Price'
+                        errorText='Please enter a valid Price'
+                        keyboardType='decimal-pad'
+                        returnKeyType='next'
+                        onInputChange={inputChangeHandler}
+                        required
+                        min={0.1}
                     />
-                </View>
+                )}
+                <CustomInput
+                    id='descritpion'
+                    label='Descritpion'
+                    errorText='Please enter a valid description'
+                    keyboardType='default'
+                    autoCaptitalize='sentences'
+                    autoCorrect
+                    multiLine
+                    numberOfLines={3}
+                    initialValue={editedProduct ? editedProduct.description : ''}
+                    initialValid={!!editedProduct}
+                    onInputChange={inputChangeHandler}
+                    required
+                    minLength={5}
+                />
             </View>
         </ScrollView>
     )
@@ -174,20 +185,6 @@ const styles = StyleSheet.create({
     form: {
         margin: 20,
     },
-    formControl: {
-        width: '100%'
-    },
-    label: {
-        fontFamily: 'open-sans-bold',
-        marginVertical: 8
-    },
-    input: {
-        paddingHorizontal: 2,
-        paddingVertical: 5,
-        borderBottomColor: '#ccc',
-        borderBottomWidth: 1
-
-    }
 });
 
 export default EditProductScreen;
