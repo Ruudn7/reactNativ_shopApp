@@ -32,7 +32,7 @@ const CartScreen = props => {
         <View style={styles.screen}>
             <View style={styles.summary}>
                 <Text style={styles.summaryText}>
-                    Total: <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
+                    Total: <Text style={styles.amount}>${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}</Text>
                 </Text>
                 <Button
                     color={Colors.accent}
@@ -51,7 +51,7 @@ const CartScreen = props => {
                         quantity={itemData.item.quantity}
                         title={itemData.item.productTitle}
                         deletable={true}
-                        amount={itemData.item.sum}
+                        amount={itemData.item.sum.toFixed(2)}
                         onRemove={() => {
                             dispatch(cartActions.removeFromCart(itemData.item.productId));
                         }}
