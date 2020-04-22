@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { Image, Platform, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 
 import Card from '../UI/Card';
@@ -13,16 +13,18 @@ const ProductItem = props => {
             <Card styles={styles.product}>
                 <View style={styles.touchable}>
                     <TouchableCmp onPress={props.onSelect} useForegroud>
-                        <View style={styles.imageContainer}>
-                            <Image source={{uri: props.image}} style={styles.image} />
-                        </View>
-                        <View style={styles.details}>
-                            <Text style={styles.title}>{props.title}</Text>
-                        <Text style={styles.price}>${props.price.toFixed(2)}</Text>
-                        </View>
+                        <View>
+                            <View style={styles.imageContainer}>
+                                <Image source={{uri: props.image}} style={styles.image} />
+                            </View>
+                            <View style={styles.details}>
+                                <Text style={styles.title}>{props.title}</Text>
+                            <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+                            </View>
 
-                        <View style={styles.actions}>
-                            {props.children}
+                            <View style={styles.actions}>
+                                {props.children}
+                            </View>
                         </View>
                     </TouchableCmp>
                 </View>
