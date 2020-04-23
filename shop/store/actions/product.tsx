@@ -10,7 +10,7 @@ export const fetchProducts = () => {
   return async dispatch => {
 
     try {
-      const response = await fetch('https://reactnativ-shop.firebaseio.com/products.jsons')
+      const response = await fetch('https://reactnativ-shop.firebaseio.com/products.json')
       
       if (!response.ok) {
         throw new Error('Something goes wrong');
@@ -42,7 +42,14 @@ export const fetchProducts = () => {
 }
 
 export const deleteProduct = productId => {
-  return { type: DELETE_PRODUCT, pid: productId };
+  return async dispatch => {
+    await fetch(`https://reactnativ-shop.firebaseio.com/products/${productId}.json`, {
+      method: 'DELETE'
+    });
+    dispatch(
+      { type: DELETE_PRODUCT, pid: productId }
+    )
+  };
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
@@ -64,8 +71,6 @@ export const createProduct = (title, description, imageUrl, price) => {
 
     const resData = await response.json();
 
-    console.log(resData)
-
     dispatch({
       type: CREATE_PRODUCT,
       productData: {
@@ -79,13 +84,31 @@ export const createProduct = (title, description, imageUrl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return {
-    type: UPDATE_PRODUCT,
-    pid: id,
-    productData: {
-      title,
-      description,
-      imageUrl,
-    }
-  };
-};
+  return async dispatch => {
+    try {
+      await fetch(
+        `https://reactnativ-shop.firebaseio.com/products/${id}.json`,
+        {
+          method: 'PATch',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            imageUrl
+          })
+        }
+      );
+      dispatch({
+        type: UPDATE_PRODUCT,
+        pid: id,
+        productData: {
+          title,
+          description,
+          imageUrl,
+        }
+      });
+    } finally { }
+  } 
+}

@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState, useReducer } from 'react';
-import { Platform, ScrollView, StyleSheet, Text, TextInput, View, Alert, KeyboardAvoidingView } from 'react-native';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import { Alert, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CustomHeaderButton from '../../components/UI/HeaderButton';
-import * as productActions from '../../store/actions/product';
 import CustomInput from '../../components/UI/Input';
+import * as productActions from '../../store/actions/product';
 
 const FORM_INPUT_UPDATE = 'UPDATE';
 
@@ -37,7 +37,6 @@ const EditProductScreen = props => {
     const editedProduct = useSelector(state =>
         state.products.userProducts.find(prod => prod.id === prodId)
     )
-
     const dispatch = useDispatch();
 
     const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -85,7 +84,7 @@ const EditProductScreen = props => {
         props.navigation.setParams({submit: submitHandler})
     }, [submitHandler])
 
-    const inputChangeHandler =  useCallback((inputIdentifier, inputValue, inputValidity) => {
+    const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
         let isValid = false;
         dispatchFormState({
             type: FORM_INPUT_UPDATE,
