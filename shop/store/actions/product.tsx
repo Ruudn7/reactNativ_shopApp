@@ -94,7 +94,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
       const response = await fetch(
         `https://reactnativ-shop.firebaseio.com/products/${id}.json`,
         {
-          method: 'PATch',
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'
           },

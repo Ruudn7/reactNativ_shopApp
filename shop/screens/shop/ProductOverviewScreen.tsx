@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { FlatList, Button, Platform, StyleSheet, ActivityIndicator, View, Text } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Button, FlatList, Platform, StyleSheet, Text, View } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ProductItem from '../../components/shop/productItem';
 import CustomHeaderButton from '../../components/UI/HeaderButton';
-import * as cartActions from '../../store/actions/cart';
 import Colors from '../../constans/Colors';
-
+import * as cartActions from '../../store/actions/cart';
 import * as productActions from '../../store/actions/product';
 
 const ProductOverviewScreen = props => {
