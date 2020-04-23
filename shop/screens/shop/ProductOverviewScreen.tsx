@@ -1,5 +1,5 @@
-import React from 'react';
-import { FlatList, Button, Platform, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { FlatList, Button, Platform, StyleSheet, ActivityIndicator, View, Text } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,8 +8,11 @@ import CustomHeaderButton from '../../components/UI/HeaderButton';
 import * as cartActions from '../../store/actions/cart';
 import Colors from '../../constans/Colors';
 
+import * as productActions from '../../store/actions/product';
 
 const ProductOverviewScreen = props => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
     const products = useSelector(state => state.products.availableProducts);
     const dispatch = useDispatch();
 
@@ -18,6 +21,53 @@ const ProductOverviewScreen = props => {
             productId: id,
             productTitle: title
         })
+    }
+
+    const loadProducts = useCallback(async () => {
+        setError('');
+        setIsLoading(true);
+        try {
+            await dispatch(productActions.fetchProducts()).then();
+        } catch (err) {
+            setError(err.message);
+        }
+        setIsLoading(false)
+    }, [dispatch, setIsLoading, setError])
+
+    useEffect(() => {
+        loadProducts();
+    }, [dispatch, loadProducts])
+
+    if (error) {
+        return (
+            <View style={styles.centerd}>
+                <Text>Error occured</Text>
+                <Button
+                    title='Try again'
+                    onPress={loadProducts}
+                    color={Colors.primary}
+                />
+            </View>
+        )
+    }
+
+    if (isLoading) {
+        return (
+            <View style={styles.centerd}>
+                <ActivityIndicator
+                    size='large'
+                    color={Colors.primary}
+                />
+            </View>
+        )
+    }
+
+    if (!isLoading && products.length === 0) {
+        return (
+            <View style={styles.centerd}>
+                <Text>No Product finded</Text>
+            </View>
+        )
     }
     
     return (
@@ -85,7 +135,11 @@ ProductOverviewScreen.navigationOptions = navData => {
 }
 
 const styles = StyleSheet.create({
-
+    centerd: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 export default ProductOverviewScreen;   
