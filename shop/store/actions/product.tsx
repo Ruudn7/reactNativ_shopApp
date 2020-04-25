@@ -29,8 +29,6 @@ export const fetchProducts = () => {
           resData[key].price
         ))
 
-        console
-
         dispatch({
           type: SET_PRODUCT,
           products: loadedProducts,
