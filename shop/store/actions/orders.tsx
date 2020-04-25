@@ -57,8 +57,8 @@ export const addOrder = (cartItems, totalAmount) => {
     const resData = await response.json();
 
     if (!response.ok) {
-        throw Error('Sth went wrong')
-      }
+      throw Error('Sth went wrong')
+    }
 
     dispatch({
         type: ADD_ORDER,
