@@ -69,7 +69,6 @@ const AuthScreen  = props => {
                 formState.inputValues.password
             )
         } else {
-            console.log(formState.inputValues)
             action = authActions.login(
                 formState.inputValues.email,
                 formState.inputValues.password
@@ -89,7 +88,6 @@ const AuthScreen  = props => {
 
     const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
         let isValid = false;
-        console.log(inputIdentifier, inputValue, inputValidity)
         dispatchFormState({
             type: FORM_INPUT_UPDATE,
             value: inputValue,
