@@ -33,9 +33,7 @@ const CustomInput = props => {
     const { onInputChange } = props;
 
     useEffect(() => {
-        if (inputState.touched) {
-            onInputChange(props.id, inputState.value, inputState.isValid)
-        }
+        onInputChange(props.id, inputState.value, inputState.isValid)
     }, [inputState, onInputChange, props.id])
 
     const textChangeHandler = text => {
