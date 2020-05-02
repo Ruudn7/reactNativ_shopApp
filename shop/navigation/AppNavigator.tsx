@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack'
 import ProductOverviewScreen from '../screens/shop/ProductOverviewScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
+import { ProductNavigator } from './ShopNavigator';
 
 const MyStack = createStackNavigator();
 
@@ -14,9 +15,7 @@ const AppNavigator = props => {
 
     return (
         <NavigationContainer>
-            <MyStack.Navigator>
-                <MyStack.Screen name="ProductOverviewScreen" component={ProductOverviewScreen} />
-            </MyStack.Navigator>
+            <ProductNavigator />
         </NavigationContainer>
     );
 };
