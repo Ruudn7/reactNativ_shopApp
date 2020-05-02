@@ -38,7 +38,7 @@ const EditProductScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const prodId = props.navigation.getParam('productId');
+    const prodId = props.route.params.productId;
     const editedProduct = useSelector(state =>
         state.products.userProducts.find(prod => prod.id === prodId)
     )
@@ -196,9 +196,9 @@ const EditProductScreen = props => {
 };
 
 export const optionScreen = navData => {
-    const submitFn = navData.navigation.getParam('submit');
+    const submitFn = navData.route.params.submit;
     return {
-        headerTitle: () => navData.navigation.getParam('productId')
+        headerTitle: () => navData.route.params.productId
             ? 'Edit Product'
             : 'Add product',
         headerRight: () => (

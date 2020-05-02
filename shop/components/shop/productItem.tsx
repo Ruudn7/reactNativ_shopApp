@@ -3,7 +3,7 @@ import { Image, Platform, StyleSheet, Text, TouchableNativeFeedback, TouchableOp
 
 import Card from '../UI/Card';
 
-const ProductItem = props => {
+const ProductItem = (props: any) => {
     let TouchableCmp: any = TouchableOpacity;
 
     if (Platform.OS === 'android' && Platform.Version >= 21) {
