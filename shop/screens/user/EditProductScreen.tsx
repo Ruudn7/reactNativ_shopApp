@@ -38,7 +38,7 @@ const EditProductScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const prodId = props.route.params.productId;
+    const prodId = props.route.params ? props.route.params.productId : null;
     const editedProduct = useSelector(state =>
         state.products.userProducts.find(prod => prod.id === prodId)
     )
@@ -105,7 +105,17 @@ const EditProductScreen = props => {
     }, [dispatch, prodId, formState.inputValues.title, formState.inputValues.description, formState.inputValues.imageUrl, formState.inputValues.price]);
         
     useEffect(() => {
-        props.navigation.setParams({submit: submitHandler})
+        props.navigation.setOptions({
+            headerRight: () => (
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                    <Item
+                        title='Save'
+                        iconName={ Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'}
+                        onPress={submitHandler}
+                    />
+                </HeaderButtons>
+            )
+        })
     }, [submitHandler])
 
     const inputChangeHandler = useCallback((inputIdentifier, inputValue, inputValidity) => {
@@ -196,20 +206,11 @@ const EditProductScreen = props => {
 };
 
 export const optionScreen = navData => {
-    const submitFn = navData.route.params.submit;
+    const routeParams = navData.route.params ? navData.route.params : {};
     return {
-        headerTitle: () => navData.route.params.productId
-            ? 'Edit Product'
-            : 'Add product',
-        headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                <Item
-                    title='Save'
-                    iconName={ Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'}
-                    onPress={submitFn}
-                />
-            </HeaderButtons>
-        )
+        headerTitle: () => routeParams.productId
+            ? <Text>Edit Product</Text>
+            : <Text>Add product</Text>
     }
 }
 
