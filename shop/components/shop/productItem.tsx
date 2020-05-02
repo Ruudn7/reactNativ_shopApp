@@ -3,7 +3,7 @@ import { Image, Platform, StyleSheet, Text, TouchableNativeFeedback, TouchableOp
 
 import Card from '../UI/Card';
 
-const ProductItem = props => {
+const ProductItem = (props: any) => {
     let TouchableCmp: any = TouchableOpacity;
 
     if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -19,7 +19,7 @@ const ProductItem = props => {
                             </View>
                             <View style={styles.details}>
                                 <Text style={styles.title}>{props.title}</Text>
-                            <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+                                <Text style={styles.price}>${props.price.toFixed(2)}</Text>
                             </View>
 
                             <View style={styles.actions}>

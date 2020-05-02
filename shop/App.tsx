@@ -6,7 +6,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 
 import ReduxThunk from 'redux-thunk';
 
-import NavigationContainer from './navigation/NavigationContainer';
+import AppNavigator from './navigation/AppNavigator';
 import cartReducer from './store/reducers/cart';
 import productsReducer from './store/reducers/product';
 import orderReducer from './store/reducers/order';
@@ -44,7 +44,7 @@ export default function App() {
   return (
 
     <Provider store={store}>
-      <NavigationContainer />
+      <AppNavigator />
     </Provider>
   );
 }
